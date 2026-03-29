@@ -69,7 +69,7 @@ export const UserRepository = {
     return User.findByIdAndUpdate(
       id,
       updateData,
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     ).select("-password").lean();
   },
 
