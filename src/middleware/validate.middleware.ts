@@ -74,3 +74,18 @@ export const updateUserValidation = [
     .isURL()
     .withMessage("Twitter link must be a valid URL"),
 ];
+
+
+export const resetPasswordValidation = [
+  body("newPassword")
+    .isLength({ min: 6 })
+    .withMessage("New password must be at least 6 characters"),
+];
+
+
+export const forgetPasswordValidation = [ 
+  body("email")
+    .isEmail()
+    .normalizeEmail()
+    .withMessage("Valid email is required"),
+]

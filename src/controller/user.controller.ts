@@ -84,7 +84,7 @@ export const updateUser = asyncHandler(async (req: Request, res: Response) => {
   if (body.oldAvatarPublicId) await deleteFromCloudinary(body.oldAvatarPublicId);
   if (body.oldResumePublicId) await deleteFromCloudinary(body.oldResumePublicId);
 
-  return sendSuccess(res, {}, "Profile updated successfully");
+  return sendSuccess(res, null, "Profile updated successfully");
 });
 
 
