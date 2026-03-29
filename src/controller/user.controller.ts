@@ -66,7 +66,7 @@ export const updateUser = asyncHandler(async (req: Request, res: Response) => {
     resume_url: body.resume_url ?? currentUser.resume_url,
     bio: body.bio ?? currentUser.bio,
     job_title: body.job_title ?? currentUser.job_title,
-    job_role: body.job_role ?? currentUser.job_role,
+    stack: body.stack ?? currentUser.stack,
     github_link: body.github_link ?? currentUser.github_link,
     linkedin_link: body.linkedin_link ?? currentUser.linkedin_link,
     twitter_link: body.twitter_link ?? currentUser.twitter_link,

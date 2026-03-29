@@ -32,7 +32,6 @@ export const loginUserValidation = [
     .withMessage("Password must be at least 6 characters"),
 ];
 
-
 export const updateUserValidation = [
   body("email")
     .optional()
@@ -57,16 +56,11 @@ export const updateUserValidation = [
     .trim()
     .notEmpty()
     .withMessage("Job Title is required"),
-  body("job_role")
+  body("stack")
     .optional()
-    .trim()
-    .notEmpty()
-    .withMessage("Job Role is required"),
-  body("bio")
-    .optional()
-    .trim()
-    .notEmpty()
-    .withMessage("Bio is required"),
+    .isArray()
+    .withMessage("Stack must be an array of strings"),
+  body("bio").optional().trim().notEmpty().withMessage("Bio is required"),
   body("github_link")
     .optional()
     .isURL()
