@@ -98,44 +98,6 @@ export const createUser = asyncHandler(async (req: Request, res: Response) => {
 })
 
 
-export const loginUser = asyncHandler(async (req: Request, res: Response) => {
-    const {email, password} = req.body
-
-    const user = await UserRepository.findByEmail(email)
-
-    if (!user) {
-        return sendError(res, "Invalid credentials", 401)
-    }
-
-    const comparePassword = UserRepository.comparePassword(user.id, password)
-
-    if (!comparePassword) {
-        return sendError(res, "Invalid Credentials", 401)
-    }
-
-
-    const token = generateAccessToken({
-        email: user.email,
-        id: user._id.toString(),
-        fullName: user.fullName,
-        role: user.role
-    })
-
-    const refreshToken = generateRefreshToken(user._id.toString())
-
-    return sendSuccess(res, {
-        accessToken: token,
-        refreshToken,
-        user: {
-            id: user._id.toString(),
-            fullName: user.fullName,
-            email: user.email,
-            role: user.role
-        }
-    })
-    
-})
-
 
 export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
     const id = req.params.id

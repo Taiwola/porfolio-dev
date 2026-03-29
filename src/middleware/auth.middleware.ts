@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyAccessToken } from '../config/token';
+import { verifyAccessToken, verifyRefreshToken } from '../config/token';
 import { JwtPayload } from '../types';
 
 export interface AuthRequest extends Request {
@@ -29,3 +29,24 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction) => 
     res.status(401).json({ message: 'Invalid token' });
   }
 };
+
+
+export const resetPasswordMiddleware =  (req: AuthRequest, res: Response, next: NextFunction) => {
+  const token = req.query.token as string
+
+  if (!token) { res.status(401).json({ message: 'Unauthorized' }); return; }
+
+  try {
+    const decode = verifyRefreshToken(token)
+
+    req.user = {
+      id: decode.id,
+      email: "",
+      fullName: "",
+      role: "user",
+    }
+    next()
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+}
