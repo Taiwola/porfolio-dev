@@ -33,6 +33,7 @@ export const uploadProfileFiles = [
     const files = req.files as {
       avatar?: Express.Multer.File[];
       resume?: Express.Multer.File[];
+      projects?: Express.Multer.File[];
     } | undefined;
 
     if (!files) return next();
@@ -50,6 +51,11 @@ export const uploadProfileFiles = [
         const result = await uploadToCloudinary(files.resume[0], 'resumes');
         (req.body as any).resume_url = result.secure_url;
         (req.body as any).oldResumePublicId = extractPublicId(req.user?.resume_url || '');
+      }
+
+      if (files.projects?.[0]) { 
+        const result = await uploadToCloudinary(files.projects[0], 'projects');
+        (req.body as any).coverImage = result.secure_url;
       }
 
       next();

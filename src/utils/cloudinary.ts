@@ -43,7 +43,7 @@ export const deleteFromCloudinary = async (
 
 export const uploadToCloudinary = async (
   file: UploadFile,
-  folder: "avatars" | "resumes" = "avatars",
+  folder: "avatars" | "resumes" | "projects" = "avatars",
 ): Promise<CloudinaryUploadResult> => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloud.uploader.upload_stream(
