@@ -32,8 +32,7 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction) => 
 
 
 export const resetPasswordMiddleware =  (req: AuthRequest, res: Response, next: NextFunction) => {
-  const token = req.query.token as string
-
+  const token = req.headers.authorization?.split(' ')[1];
   if (!token) { res.status(401).json({ message: 'Unauthorized' }); return; }
 
   try {
