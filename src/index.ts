@@ -8,6 +8,7 @@ import { connectDB } from "./config/db.config";
 import userRoutes from "./route/user.route";
 import authRoutes from "./route/auth.route";
 import projectRoutes from "./route/project.route";
+import messageRoutes from "./route/message.route";
 import "./queues/mail.worker";
 
 dotenv.config();
@@ -30,6 +31,7 @@ const PORT = process.env.PORT || 5000;
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/messages", messageRoutes);
 
 connectDB().then(() => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

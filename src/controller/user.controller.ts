@@ -21,17 +21,25 @@ export const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
+export const getFirstUser = asyncHandler(
+  async (req: Request, res: Response) => {
+    const user = await UserRepository.findAll({});
+    const firstUser = user.users[0];
+    if (!firstUser) return sendError(res, "No users found", 404);
+    return sendSuccess(res, firstUser, "Request successfull");
+  },
+);
 
-export const getOneUser = asyncHandler(async (req: AuthRequest, res: Response) => {
-    const id = req.params.id
-    const user = await UserRepository.findById(id as string)
+export const getOneUser = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
+    const id = req.params.id;
+    const user = await UserRepository.findById(id as string);
 
-    if (!user) return sendError(res, "User does not exist")
+    if (!user) return sendError(res, "User does not exist");
 
-
-    return sendSuccess(res, user, "Request successfull")
-})
-
+    return sendSuccess(res, user, "Request successfull");
+  },
+);
 
 export const updateUser = asyncHandler(async (req: Request, res: Response) => {
   const userId = req.params.id;
@@ -74,38 +82,36 @@ export const updateUser = asyncHandler(async (req: Request, res: Response) => {
   };
 
   // Remove undefined
-  Object.keys(updateData).forEach(k => {
+  Object.keys(updateData).forEach((k) => {
     if ((updateData as any)[k] === undefined) delete (updateData as any)[k];
   });
 
   await UserRepository.updateById(userId as string, updateData);
 
   // Delete old files from Cloudinary (after successful update)
-  if (body.oldAvatarPublicId) await deleteFromCloudinary(body.oldAvatarPublicId);
-  if (body.oldResumePublicId) await deleteFromCloudinary(body.oldResumePublicId);
+  if (body.oldAvatarPublicId)
+    await deleteFromCloudinary(body.oldAvatarPublicId);
+  if (body.oldResumePublicId)
+    await deleteFromCloudinary(body.oldResumePublicId);
 
   return sendSuccess(res, null, "Profile updated successfully");
 });
 
-
 export const createUser = asyncHandler(async (req: Request, res: Response) => {
-    const body = req.body as IUser
+  const body = req.body as IUser;
 
-    await UserRepository.create({...body})
+  await UserRepository.create({ ...body });
 
-
-    return sendSuccess(res, {}, "User Created SuccessFully", 201)
-})
-
-
+  return sendSuccess(res, {}, "User Created SuccessFully", 201);
+});
 
 export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
-    const id = req.params.id
-    const user = await UserRepository.findById(id as string)
+  const id = req.params.id;
+  const user = await UserRepository.findById(id as string);
 
-    if (!user) return sendError(res, "User does not exist", 404)
+  if (!user) return sendError(res, "User does not exist", 404);
 
-    await UserRepository.deleteById(id as string)
+  await UserRepository.deleteById(id as string);
 
-    return sendSuccess(res, {}, "User deleted")
-})
+  return sendSuccess(res, {}, "User deleted");
+});

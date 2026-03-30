@@ -7,6 +7,7 @@ import { validate } from "../common/validate";
 import {
   deleteUser,
   getAllUsers,
+  getFirstUser,
   getOneUser,
   updateUser,
 } from "../controller/user.controller";
@@ -16,6 +17,7 @@ import { uploadProfileFiles } from "../config/multer.config";
 const router = Router();
 
 router.get("/", protect, getUsersValidation, validate, getAllUsers);
+router.get("/first", getFirstUser);
 router.get("/:id", protect, getOneUser);
 
 router.patch(

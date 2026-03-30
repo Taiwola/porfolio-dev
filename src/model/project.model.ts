@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, PaginateModel, Schema } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { IUser } from './users.model';
 
@@ -36,4 +36,4 @@ const ProjectSchema = new Schema<IProject>({
 
 ProjectSchema.plugin(mongoosePaginate);
 
-export const Project = mongoose.model<IProject>('Project', ProjectSchema);
+export const Project = mongoose.model<IProject, PaginateModel<IProject>>('Project', ProjectSchema);

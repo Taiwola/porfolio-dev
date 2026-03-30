@@ -32,7 +32,7 @@ export class ProjectRepository {
       ...options,
     };
     
-    return await (Project as any).paginate(filter, defaultOptions);
+    return await Project.paginate(filter, defaultOptions);
   }
 
   /**
